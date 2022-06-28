@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Interfaces\MailInterface;
+use App\Services\MailService;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Sanctum::ignoreMigrations();
+
+        $this->app->bind(MailInterface::class, MailService::class);
     }
 
     /**

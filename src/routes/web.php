@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function () {
-    \App\Jobs\SendEmailJob::dispatch();
-});
-
-
 Route::get('/', function () {
     return view('welcome');
 });
