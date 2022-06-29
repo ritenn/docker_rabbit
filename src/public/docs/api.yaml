@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  description: "Dokumentacja projektu rekrutacyjnego"
+  version: "1.0.0"
+  title: "API"
+host: "localhost:8081"
+basePath: "/api"
+tags:
+  - name: "email"
+    description: "Zarządzanie lista email"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /email:
+    get:
+      tags:
+        - "email"
+      summary: "Lista email"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/EmailIndex"
+      responses:
+        "200":
+          description: "Success"
+    post:
+      tags:
+        - "email"
+      summary: "Dodaj email"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Email"
+      responses:
+        "201":
+          description: "Żądanie wykonano prawidłowo"
+        "422":
+          description: "Błąd podczas wykonywania żądania"
+  /email/{id}:
+    get:
+      tags:
+        - "email"
+      summary: "Pobierz email o ID"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID email'a"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "Żądanie wykonano prawidłowo"
+        "404":
+          description: "Nie znaleziono maila"
+    delete:
+      tags:
+        - "email"
+      summary: "Usuń email o ID"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID email'a"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "Żądanie wykonano prawidłowo"
+        "404":
+          description: "Nie znaleziono maila"
+definitions:
+  EmailIndex:
+    type: "object"
+    required:
+      - "page"
+      - "perPage"
+    properties:
+      page:
+        type: "integer"
+      perPage:
+        type: "integer"
+  Email:
+    type: "object"
+    required:
+      - "subject"
+      - "recipient"
+      - "message"
+    properties:
+      subject:
+        type: "string"
+      recipient:
+        type: "string"
+      message:
+        type: "string"
