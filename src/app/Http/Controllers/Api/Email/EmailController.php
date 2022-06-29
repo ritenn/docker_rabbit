@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Email;
 
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Email\IndexRequest;
+use App\Http\Requests\Api\Email\StoreRequest;
 use App\Interfaces\MailInterface;
 use Illuminate\Http\JsonResponse;
 
@@ -55,7 +56,7 @@ class EmailController extends Controller
     public function store(StoreRequest $request) : JsonResponse
     {
         return $this->responseSuccess(
-            data: $this->mailService->store($request->validated()),
+            data: $this->mailService->store($request->validated())->toArray(),
             status: 201
         );
     }

@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('email', EmailController::class)->only('index', 'show', 'store', 'destroy');
+Route::resource('emails', EmailController::class)->only('index', 'show', 'store', 'destroy');

@@ -16,6 +16,6 @@ class EmailNotification implements ShouldQueue
      */
     public function handle(NotificationSent $event)
     {
-        $event->notifiable->update(['status' => EmailStatus::SENT]);
+        $event->notifiable->update(['status' => EmailStatus::SENT->value]);
     }
 }

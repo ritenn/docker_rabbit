@@ -3,10 +3,11 @@
 namespace App\Dictionary;
 
 
-class EmailStatus {
-    const SENDING = 1;
-    const SENT = 2;
-    const ERROR = 3;
+enum EmailStatus : int
+{
+    case SENDING = 1;
+    case SENT = 2;
+    case ERROR = 3;
 
     /**
      * @param int $id
@@ -15,9 +16,12 @@ class EmailStatus {
      */
     public static function get(int $id) : ?string
     {
-        $class = new \ReflectionClass(__CLASS__);
-        $statuses = array_flip($class->getConstants());
-
-        return $statuses[$id] ?? null;
+        return match($id)
+        {
+            1 => self::SENDING->name,
+            2 => self::SENT->name,
+            3 => self::ERROR->name,
+            default => null
+        };
     }
 }

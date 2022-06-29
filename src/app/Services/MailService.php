@@ -12,7 +12,10 @@ use Illuminate\Pagination\Paginator;
 
 class MailService implements MailInterface
 {
-    public function __construct(private Email $model) {}
+    /**
+     * @param Email $model
+     */
+    public function __construct(private readonly Email $model) {}
 
     /**
      * @param int $id
@@ -36,7 +39,7 @@ class MailService implements MailInterface
             return $page;
         });
 
-        return $this->model::paginate($perPage);
+        return $this->model::orderByDesc('created_at')->paginate($perPage);
     }
 
     /**
@@ -51,7 +54,7 @@ class MailService implements MailInterface
 
         if ($send)
         {
-            $email->update(['status' => EmailStatus::SENDING]);
+            $email->update(['status' => EmailStatus::SENDING->value]);
             $this->send($email);
         }
 
@@ -70,7 +73,7 @@ class MailService implements MailInterface
         } catch (\Exception $exception)
         {
             $email->update([
-               'status' => EmailStatus::ERROR,
+               'status' => EmailStatus::ERROR->value,
                'error_message' => $exception->getMessage()
             ]);
 
